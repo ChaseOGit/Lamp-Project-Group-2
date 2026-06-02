@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Contact Manager</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Animated Floating Orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-container fade-in">
+        
+        <!-- Top Navigation -->
+        <header class="dash-header">
+            <h2>My Contacts</h2>
+            <div class="user-controls">
+                <!-- inject the user's name here later with JS -->
+                <span id="userGreeting">Welcome back!</span>
+                <button id="logoutBtn" class="outline-btn">Log Out</button>
+            </div>
+        </header>
+
+        <!-- Search and Add Toolbar -->
+        <div class="toolbar">
+            <div class="search-box input-group">
+                <input type="text" id="searchInput" placeholder="Search contacts...">
+            </div>
+            <button id="addContactBtn" class="primary-btn add-btn">+ Add Contact</button>
+        </div>
+
+        <!-- Contacts Grid -->
+        <div class="contacts-scroll-area">
+            <div class="contacts-grid" id="contactsGrid">
+                
+                <!-- Example Contact Card  JS will generate these dynamically later) -->
+                <div class="contact-card">
+                    <div class="contact-info">
+                        <h3>John Doe</h3>
+                        <p class="contact-detail">📞 (555) 123-4567</p>
+                        <p class="contact-detail">✉️ john.doe@example.com</p>
+                    </div>
+                    <div class="contact-actions">
+                        <button class="action-btn edit-btn">Edit</button>
+                        <button class="action-btn delete-btn">Delete</button>
+                    </div>
+                </div>
+
+                <!-- Example Contact Card 2 -->
+                <div class="contact-card">
+                    <div class="contact-info">
+                        <h3>Jane Smith</h3>
+                        <p class="contact-detail">📞 (555) 987-6543</p>
+                        <p class="contact-detail">✉️ jane.smith@example.com</p>
+                    </div>
+                    <div class="contact-actions">
+                        <button class="action-btn edit-btn">Edit</button>
+                        <button class="action-btn delete-btn">Delete</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Contact Modal (Hidden by default) -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="glass-container modal-content">
+            <h2 id="modalTitle">Add New Contact</h2>
+            <form id="contactForm">
+                <div class="input-group">
+                    <input type="text" id="firstName" placeholder="First Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="lastName" placeholder="Last Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="phone" placeholder="Phone Number">
+                </div>
+                <div class="input-group">
+                    <input type="email" id="email" placeholder="Email Address">
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" id="closeModalBtn" class="outline-btn">Cancel</button>
+                    <button type="submit" class="primary-btn">Save Contact</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
