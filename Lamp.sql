@@ -3,7 +3,7 @@ Use lamp_project;
 
 Create table users(
 	user_id int primary key auto_increment not null unique,
-	username varchar(255) not null,
+	username varchar(255) not null unique,
 	passwords varchar(255) not null
 );
 
