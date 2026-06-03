@@ -1,20 +1,21 @@
 <?php
-        // FROM COLORS APP EDIT THIS FILE
 	$inData = getRequestInfo();
 	
 	$searchResults = "";
 	$searchCount = 0;
 
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+	// Database connection using your specified schema name 
+	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "lamp_project");
 	if ($conn->connect_error) 
 	{
 		returnWithError( $conn->connect_error );
 	} 
 	else
 	{
-		$stmt = $conn->prepare("select Name from Colors where Name like ? and UserID=?");
-		$colorName = "%" . $inData["search"] . "%";
-		$stmt->bind_param("ss", $colorName, $inData["userId"]);
+		// Updated to search your 'contacts' table using 'c_name' and 'reference_id' 
+		$stmt = $conn->prepare("select * from contacts where c_name like ? and reference_id=?");
+		$searchName = "%" . $inData["search"] . "%";
+		$stmt->bind_param("si", $searchName, $inData["reference_id"]);
 		$stmt->execute();
 		
 		$result = $stmt->get_result();
@@ -26,7 +27,8 @@
 				$searchResults .= ",";
 			}
 			$searchCount++;
-			$searchResults .= '"' . $row["Name"] . '"';
+			// Returning a full JSON object for each contact as per assignment requirements 
+			$searchResults .= '{"c_name":"' . $row["c_name"] . '", "phone":"' . $row["phone"] . '", "email":"' . $row["email"] . '", "contact_id":' . $row["contact_id"] . '}';
 		}
 		
 		if( $searchCount == 0 )
@@ -55,7 +57,7 @@
 	
 	function returnWithError( $err )
 	{
-		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+		$retValue = '{"results":[],"error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
@@ -64,5 +66,4 @@
 		$retValue = '{"results":[' . $searchResults . '],"error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
-	
 ?>
