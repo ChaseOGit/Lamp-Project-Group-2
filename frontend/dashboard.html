@@ -73,13 +73,19 @@
 
     <script>
         function openModal() {
-            // Displays the modal overlay
-            document.getElementById('contactModal').style.display = 'flex'; // 'flex' helps center it if you used flexbox in CSS
+            let modal = document.getElementById('contactModal');
+            modal.style.display = 'flex';
+            modal.style.opacity = '1';
+            modal.style.visibility = 'visible';
+            modal.style.zIndex = '9999'; // Forces it to the front
+            modal.style.pointerEvents = 'auto';
         }
 
         function closeModal() {
-            // Hides the modal overlay
-            document.getElementById('contactModal').style.display = 'none';
+            let modal = document.getElementById('contactModal');
+            modal.style.display = 'none';
+            modal.style.opacity = '0';
+            modal.style.visibility = 'hidden';
             document.getElementById('contactForm').reset(); 
         }
     </script>
