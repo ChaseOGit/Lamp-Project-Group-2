@@ -5,16 +5,23 @@
 	$username = "";
 
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "lamp_project"); 	
+	
 	if( $conn->connect_error ) {
 		returnWithError( $conn->connect_error );
 	} else {
-		$stmt = $conn->prepare("SELECT user_id, username FROM users WHERE username=? AND passwords=?");
-		$stmt->bind_param("ss", $inData["username"], $inData["passwords"]);
+		
+		$stmt = $conn->prepare("SELECT user_id, username, passwords FROM users WHERE username=?");
+		$stmt->bind_param("s", $inData["username"]);
 		$stmt->execute();
 		$result = $stmt->get_result();
 
 		if( $row = $result->fetch_assoc() ) {
-			returnWithInfo($row['username'], $row['user_id']);
+			// Verify the plain text password against the hashed password stored in the DB
+			if( password_verify($inData["passwords"], $row['passwords']) ) {
+				returnWithInfo($row['username'], $row['user_id']);
+			} else {
+				returnWithError("Invalid Password");
+			}
 		} else {
 			returnWithError("No Records Found");
 		}
