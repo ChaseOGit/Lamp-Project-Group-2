@@ -137,6 +137,7 @@ async function addContact() {
 
         if (jsonObject.error === "") {
             // Close modal , clear form, and reload contacts
+            closeModal();
             document.getElementById("contactForm").reset();
             // document.getElementById("contactModal").style.display = "none"; // Hide modal
             searchContacts(); 
