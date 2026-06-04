@@ -13,6 +13,6 @@ Create table contacts(
 	c_name varchar(255) not null,
 	phone varchar(20),
 	email varchar(255),
-	foreign key (reference_id) references users (user_id)
+	FOREIGN KEY (reference_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
 
