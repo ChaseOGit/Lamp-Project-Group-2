@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Manager</title>
+    <title>Contact Manager - Login</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -16,9 +16,10 @@
 
     <div class="glass-container fade-in">
         <div class="header">
-            <h2>Contacts</h2>
+            <h2 id="formTitle">Contacts Login</h2>
         </div>
         
+        <!-- LOGIN FORM -->
         <form id="loginForm">
             <div class="input-group">
                 <input type="text" id="username" placeholder="Username" required>
@@ -28,13 +29,60 @@
                 <input type="password" id="password" placeholder="Password" required>
             </div>
             
-            <button type="submit" class="primary-btn">Sign In</button>
+            <!-- Type is "button" so it doesn't refresh the page, and onclick triggers your JS -->
+            <button type="button" class="primary-btn" onclick="doLogin()">Sign In</button>
             
+            <!-- This span is where error messages like "Invalid Password" will appear -->
+            <span id="loginResult" style="color: #ff4d4d; display: block; margin-top: 10px; text-align: center;"></span>
+
             <p class="switch-form">
-                Don't have an account? <br> <a href="#">Create one now.</a>
+                Don't have an account? <br> <a href="#" onclick="toggleForms()">Create one now.</a>
+            </p>
+        </form>
+
+        <!-- REGISTER FORM (Hidden by default) -->
+        <form id="registerForm" style="display: none;">
+            <div class="input-group">
+                <input type="text" id="regUsername" placeholder="Choose a Username" required>
+            </div>
+            
+            <div class="input-group">
+                <input type="password" id="regPassword" placeholder="Choose a Password" required>
+            </div>
+            
+            <button type="button" class="primary-btn" onclick="doRegister()">Register</button>
+            
+            <span id="registerResult" style="color: #ff4d4d; display: block; margin-top: 10px; text-align: center;"></span>
+
+            <p class="switch-form">
+                Already have an account? <br> <a href="#" onclick="toggleForms()">Sign In here.</a>
             </p>
         </form>
     </div>
 
+    <script src="js/app.js"></script>
+
+    <!-- UI Script to toggle between Login and Register -->
+    <script>
+        function toggleForms() {
+            let login = document.getElementById("loginForm");
+            let register = document.getElementById("registerForm");
+            let title = document.getElementById("formTitle");
+
+            // Clear any old error messages
+            document.getElementById("loginResult").innerHTML = "";
+            document.getElementById("registerResult").innerHTML = "";
+
+            if (login.style.display === "none") {
+                login.style.display = "block";
+                register.style.display = "none";
+                title.innerHTML = "Contacts Login";
+            } else {
+                login.style.display = "none";
+                register.style.display = "block";
+                title.innerHTML = "Create Account";
+            }
+        }
+    </script>
 </body>
 </html>
