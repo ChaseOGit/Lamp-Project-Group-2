@@ -76,12 +76,21 @@ body {
 }
 
 .fade-in {
-    animation: fadeIn 0.6s ease-out;
+    animation: fadeIn 0.6s ease-out forwards; /* Added 'forwards' here */
 }
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translate(-50%, -45%); }
     to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+
+.dashboard-container.fade-in {
+    animation: dashFade 0.6s ease-out forwards;
+}
+@keyframes dashFade {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 
