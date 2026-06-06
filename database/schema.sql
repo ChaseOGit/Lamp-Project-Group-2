@@ -1,5 +1,5 @@
-create schema lamp_project;
-Use lamp_project;
+CREATE DATABASE IF NOT EXISTS lamp_project;
+USE lamp_project;
 
 Create table users(
 	user_id int primary key auto_increment not null unique,
