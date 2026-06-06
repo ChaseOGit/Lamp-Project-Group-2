@@ -1,4 +1,4 @@
-const urlBase = 'https://cis4004chase.xyz/contacts/api';
+const urlBase = '../api';
 const extension = 'php';
 
 
