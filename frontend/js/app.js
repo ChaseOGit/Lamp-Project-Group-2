@@ -1,4 +1,4 @@
-const urlBase = 'https://cis4004chase.xyz/api'; // Make sure this points exactly to where your PHP files live
+const urlBase = 'https://cis4004chase.xyz/contacts/api'; // Make sure this points exactly to where your PHP files live
 const extension = 'php';
 
 // ==========================================
