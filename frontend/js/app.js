@@ -56,7 +56,7 @@ async function doRegister() {
         let resultSpan = document.getElementById("registerResult");
         resultSpan.style.color = "#00ffcc"; // Greenish success color
         resultSpan.innerHTML = "Success! Please sign in.";
-        setTimeout(toggleForms, 1500); // Wait 1.5 seconds, then toggle to login
+        setTimeout(switchToLogin, 1500); // Wait 1.5 seconds, then toggle to login
         
     } catch (err) {
         document.getElementById("registerResult").innerHTML = "Network Error: " + err.message;

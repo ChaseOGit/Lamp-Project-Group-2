@@ -61,28 +61,31 @@
     </div>
 
     <script src="js/app.js"></script>
-
-    <!-- UI Script to toggle between Login and Register -->
+    
+<!-- UI Script to toggle between Login and Register -->
     <script>
         function toggleForms() {
             let login = document.getElementById("loginForm");
-            let register = document.getElementById("registerForm");
-            let title = document.getElementById("formTitle");
-
-            // Clear any old error messages
-            document.getElementById("loginResult").innerHTML = "";
-            document.getElementById("registerResult").innerHTML = "";
-
             if (login.style.display === "none") {
-                login.style.display = "block";
-                register.style.display = "none";
-                title.innerHTML = "Contacts Login";
+                switchToLogin();
             } else {
-                login.style.display = "none";
-                register.style.display = "block";
-                title.innerHTML = "Create Account";
+                switchToRegister();
             }
         }
+
+        function switchToLogin() {
+            document.getElementById("loginForm").style.display = "block";
+            document.getElementById("registerForm").style.display = "none";
+            document.getElementById("formTitle").innerHTML = "Contacts Login";
+            document.getElementById("loginResult").innerHTML = "";
+            document.getElementById("registerResult").innerHTML = "";
+        }
+
+        function switchToRegister() {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("registerForm").style.display = "block";
+            document.getElementById("formTitle").innerHTML = "Create Account";
+            document.getElementById("loginResult").innerHTML = "";
+            document.getElementById("registerResult").innerHTML = "";
+        }
     </script>
-</body>
-</html>
