@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Manager - Login</title>
+    <title>Dashboard - Contact Manager</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<!-- Triggers the loadDashboard() function immediately when the page opens -->
+<body onload="loadDashboard()">
 
     <!-- Animated Floating Orbs -->
     <div class="orb orb-1"></div>
@@ -14,74 +15,73 @@
     <div class="orb orb-3"></div>
     <div class="orb orb-4"></div>
 
-    <div class="glass-container fade-in">
-        <div class="header">
-            <h2 id="formTitle">Contacts Login</h2>
-        </div>
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-container fade-in">
         
-        <!-- LOGIN FORM -->
-        <form id="loginForm">
-            <div class="input-group">
-                <input type="text" id="username" placeholder="Username" required>
+        <!-- Top Navigation -->
+        <header class="dash-header">
+            <h2>My Contacts</h2>
+            <div class="user-controls">
+                <span id="userGreeting">Welcome back!</span>
+                <!-- Log out triggers doLogout() in app.js -->
+                <button id="logoutBtn" class="outline-btn" onclick="doLogout()" aria-label="Log Out">Log Out</button>
             </div>
-            
-            <div class="input-group">
-                <input type="password" id="password" placeholder="Password" required>
-            </div>
-            
-            <!-- Type is "button" so it doesn't refresh the page, and onclick triggers your JS -->
-            <button type="button" class="primary-btn" onclick="doLogin()">Sign In</button>
-            
-            <!-- This span is where error messages like "Invalid Password" will appear -->
-            <span id="loginResult" style="color: #ff4d4d; display: block; margin-top: 10px; text-align: center;"></span>
+        </header>
 
-            <p class="switch-form">
-                Don't have an account? <br> <a href="#" onclick="toggleForms()">Create one now.</a>
-            </p>
-        </form>
-
-        <!-- REGISTER FORM (Hidden by default) -->
-        <form id="registerForm" style="display: none;">
-            <div class="input-group">
-                <input type="text" id="regUsername" placeholder="Choose a Username" required>
+        <!-- Search and Add Toolbar -->
+        <div class="toolbar">
+            <div class="search-box input-group">
+                <!-- onkeyup triggers a new search every time a key is pressed -->
+                <input type="text" id="searchInput" placeholder="Search contacts..." aria-label="Search contacts" onkeyup="searchContacts()">
             </div>
-            
-            <div class="input-group">
-                <input type="password" id="regPassword" placeholder="Choose a Password" required>
-            </div>
-            
-            <button type="button" class="primary-btn" onclick="doRegister()">Register</button>
-            
-            <span id="registerResult" style="color: #ff4d4d; display: block; margin-top: 10px; text-align: center;"></span>
+            <button id="addContactBtn" class="primary-btn add-btn" onclick="triggerAddModal()" aria-label="Add new contact">+ Add Contact</button>
+        </div>
 
-            <p class="switch-form">
-                Already have an account? <br> <a href="#" onclick="toggleForms()">Sign In here.</a>
-            </p>
-        </form>
+        <!-- Contacts Grid -->
+        <div class="contacts-scroll-area">
+            <!-- app.js will dynamically generate the cards here, aria-live helps screen readers know when it updates -->
+            <div class="contacts-grid" id="contactsGrid" aria-live="polite">
+                
+            </div>
+        </div>
     </div>
 
+    <!-- Add/Edit Contact Modal (Hidden by default using style="display: none;") -->
+    <div class="modal-overlay" id="contactModal" style="display: none;">
+        <div class="glass-container modal-content">
+            <h2 id="modalTitle">Add New Contact</h2>
+            
+            <!-- preventDefault() stops the browser from refreshing the page on submit -->
+            <!-- It now points to submitContactForm() to handle both adding and editing -->
+            <form id="contactForm" onsubmit="event.preventDefault(); submitContactForm();">
+                
+                <div class="input-group">
+                    <input type="text" id="c_name" placeholder="Full Name" aria-label="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="phone" placeholder="Phone Number" aria-label="Phone Number">
+                </div>
+                <div class="input-group">
+                    <input type="email" id="email" placeholder="Email Address" aria-label="Email Address">
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" id="closeModalBtn" class="outline-btn" onclick="closeModal()" aria-label="Cancel">Cancel</button>
+                    <button type="submit" class="primary-btn" aria-label="Save Contact">Save Contact</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Link to your Javascript file -->
     <script src="js/app.js"></script>
 
-    <!-- UI Script to toggle between Login and Register -->
+    <!-- Small Script to handle the Modal UI (Closing only, opening is handled in app.js now) -->
     <script>
-        function toggleForms() {
-            let login = document.getElementById("loginForm");
-            let register = document.getElementById("registerForm");
-            let title = document.getElementById("formTitle");
-
-            // Clear any old error messages
-            document.getElementById("loginResult").innerHTML = "";
-            document.getElementById("registerResult").innerHTML = "";
-
-            if (login.style.display === "none") {
-                login.style.display = "block";
-                register.style.display = "none";
-                title.innerHTML = "Contacts Login";
-            } else {
-                login.style.display = "none";
-                register.style.display = "block";
-                title.innerHTML = "Create Account";
-            }
+        function closeModal() {
+            // Hides the modal overlay
+            document.getElementById('contactModal').style.display = 'none';
+            // Clears the text inputs so it's empty the next time you open it
+            document.getElementById('contactForm').reset(); 
         }
     </script>
 </body>
