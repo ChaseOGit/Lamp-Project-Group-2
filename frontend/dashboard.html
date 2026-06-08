@@ -6,8 +6,10 @@
     <title>Dashboard - Contact Manager</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+<!-- Triggers the loadDashboard() function immediately when the page opens -->
 <body onload="loadDashboard()">
 
+    <!-- Animated Floating Orbs -->
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
@@ -22,7 +24,7 @@
             <div class="user-controls">
                 <span id="userGreeting">Welcome back!</span>
                 <!-- Log out triggers doLogout() in app.js -->
-                <button id="logoutBtn" class="outline-btn" onclick="doLogout()">Log Out</button>
+                <button id="logoutBtn" class="outline-btn" onclick="doLogout()" aria-label="Log Out">Log Out</button>
             </div>
         </header>
 
@@ -30,62 +32,55 @@
         <div class="toolbar">
             <div class="search-box input-group">
                 <!-- onkeyup triggers a new search every time a key is pressed -->
-                <input type="text" id="searchInput" placeholder="Search contacts..." onkeyup="searchContacts()">
+                <input type="text" id="searchInput" placeholder="Search contacts..." aria-label="Search contacts" onkeyup="searchContacts()">
             </div>
-            <button id="addContactBtn" class="primary-btn add-btn" onclick="openModal()">+ Add Contact</button>
+            <button id="addContactBtn" class="primary-btn add-btn" onclick="triggerAddModal()" aria-label="Add new contact">+ Add Contact</button>
         </div>
 
         <!-- Contacts Grid -->
         <div class="contacts-scroll-area">
-            <div class="contacts-grid" id="contactsGrid">
+            <!-- app.js will dynamically generate the cards here, aria-live helps screen readers know when it updates -->
+            <div class="contacts-grid" id="contactsGrid" aria-live="polite">
                 
             </div>
         </div>
     </div>
 
-    <!-- Add Contact Modal  -->
+    <!-- Add/Edit Contact Modal (Hidden by default using style="display: none;") -->
     <div class="modal-overlay" id="contactModal" style="display: none;">
         <div class="glass-container modal-content">
             <h2 id="modalTitle">Add New Contact</h2>
             
-            <!--  preventDefault() stops the browser from refreshing the page on submit -->
-            <form id="contactForm" onsubmit="event.preventDefault(); addContact();">
-                
+            <!-- preventDefault() stops the browser from refreshing the page on submit -->
+            <!-- It now points to submitContactForm() to handle both adding and editing -->
+            <form id="contactForm" onsubmit="event.preventDefault(); submitContactForm();">
                 
                 <div class="input-group">
-                    <input type="text" id="c_name" placeholder="Full Name" required>
+                    <input type="text" id="c_name" placeholder="Full Name" aria-label="Full Name" required>
                 </div>
                 <div class="input-group">
-                    <input type="text" id="phone" placeholder="Phone Number">
+                    <input type="text" id="phone" placeholder="Phone Number" aria-label="Phone Number">
                 </div>
                 <div class="input-group">
-                    <input type="email" id="email" placeholder="Email Address">
+                    <input type="email" id="email" placeholder="Email Address" aria-label="Email Address">
                 </div>
                 <div class="modal-buttons">
-                    <button type="button" id="closeModalBtn" class="outline-btn" onclick="closeModal()">Cancel</button>
-                    <button type="submit" class="primary-btn">Save Contact</button>
+                    <button type="button" id="closeModalBtn" class="outline-btn" onclick="closeModal()" aria-label="Cancel">Cancel</button>
+                    <button type="submit" class="primary-btn" aria-label="Save Contact">Save Contact</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- Link to your Javascript file -->
     <script src="js/app.js"></script>
 
+    <!-- Small Script to handle the Modal UI (Closing only, opening is handled in app.js now) -->
     <script>
-        function openModal() {
-            let modal = document.getElementById('contactModal');
-            modal.style.display = 'flex';
-            modal.style.opacity = '1';
-            modal.style.visibility = 'visible';
-            modal.style.zIndex = '9999'; // Forces it to the front
-            modal.style.pointerEvents = 'auto';
-        }
-
         function closeModal() {
-            let modal = document.getElementById('contactModal');
-            modal.style.display = 'none';
-            modal.style.opacity = '0';
-            modal.style.visibility = 'hidden';
+            // Hides the modal overlay
+            document.getElementById('contactModal').style.display = 'none';
+            // Clears the text inputs so it's empty the next time you open it
             document.getElementById('contactForm').reset(); 
         }
     </script>
